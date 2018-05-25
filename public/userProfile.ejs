@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hidden Campers</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/stylesheets/main.css">
+	<link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Dancing+Script:400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Love+Ya+Like+A+Sister" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Nanum+Pen+Script" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Trocchi" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Luckiest+Guy" rel="stylesheet">
+</head>
+<body>
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand"
+				href="/campsites">
+				<i class="glyphicon glyphicon-home" aria-hidden="true"></i>
+				HiddenCampers
+			</a>
+		</div>
+
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<% if(!currentUser){ %>
+
+				<li>
+					<a href="/campsites/add"><i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+						Add a Campsite
+					</a>
+				</li>
+
+				<li>
+					<a href="/login"><i class="glyphicon glyphicon-log-in" aria-hidden="true"></i> 
+						Login
+					</a>
+				</li>
+
+				<li>
+					<a href="/register"><i class="glyphicon glyphicon-user" aria-hidden="true"></i>
+						Sign Up
+					</a>
+				</li>
+
+				<% } else { %>
+				<li>
+					<a href="/user/<%= currentUser._id%>">
+						<i class="glyphicon glyphicon-leaf" aria-hidden="true"></i>
+						Signed-in as <%= currentUser.username %>
+					</a>
+				</li>
+
+				<li>
+					<a href="/campsites/add">
+						<i class="glyphicon glyphicon-plus" aria-hidden="true"></i> 
+						Add a Campsite
+					</a>
+				</li>
+
+				<li>
+					<a href="/logout">
+						<i class="glyphicon glyphicon-log-out" aria-hidden="true"></i>
+						Logout
+					</a>
+				</li>
+
+				<%}%>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+	<h1 id="userGreeting"> Hi, <%= currentUser.firstName %> <%= currentUser.lastName %> </h1>
+
+	<div class="container">
+		<div class="row">
+			<div id= "accountdetails" class="col-md-3">
+				<p class="lead">Your account details :</p>
+				<h4 class="userprofile"> First Name : <span id="userdetails"><%= currentUser.firstName %></span></h4>
+				<h4 class="userprofile"> Last Name : <span id="userdetails"><%= currentUser.lastName %></span></h4>
+				<h4 class="userprofile"> Email : <span id="userdetails"><%= currentUser.email %></span></h4>
+				<h4 class="userprofile"> Username : <span id="userdetails"><%= currentUser.username %></span></h4>
+			</div>
+			<div class="col-md-9">
+				<p class="lead">Campsites you've added so far:</p>
+				<div class="row text-center campIndex">
+					<% campsites.forEach(function(campsite){ %>
+					<div class="col-md-3 col-sm-6">
+						<div class="thumbnail">
+							<a href="/campsites/<%= campsite._id %>"><img class="gridhome" src="<%= campsite.image %>" >
+								<div class="profilethumbnail" class="caption">
+									<h4 class="profilethumbnail"> <%= campsite.name%> </h4>
+									<h5 class="profilethumbnail"><%= campsite.location %></h5>
+									<div class="form-group">
+										<a href="/campsites/<%= campsite._id %>/edit"><button class="btn btn-warning ">Edit</button></a>
+										<form class="delete-form" action="/campsites/<%= campsite._id %>?_method=DELETE" method="POST">
+											<button class="btn btn-danger ">Delete</button>
+										</form>
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+					<% }); %>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

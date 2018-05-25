@@ -1,0 +1,37 @@
+{
+  "name": "hiddencampers",
+  "version": "1.0.0",
+  "description": "Hidden Campers",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "Rosy/Sarthak/Sugandha",
+  "license": "ISC",
+  "dependencies": {
+    "@fortawesome/fontawesome-free-brands": "^5.0.10",
+    "@fortawesome/fontawesome-free-regular": "^5.0.10",
+    "@fortawesome/fontawesome-free-solid": "^5.0.10",
+    "async": "^2.6.0",
+    "body-parser": "^1.18.2",
+    "cloudinary": "^1.11.0",
+    "connect-flash": "^0.1.1",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "file-system": "^2.2.2",
+    "font-awesome": "^4.7.0",
+    "fs": "0.0.1-security",
+    "locus": "^2.0.1",
+    "method-override": "^2.3.10",
+    "moment": "^2.22.0",
+    "mongoose": "^5.0.10",
+    "multer": "^1.3.0",
+    "nodemailer": "^4.6.4",
+    "npm": "^5.8.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^5.0.0"
+  }
+}

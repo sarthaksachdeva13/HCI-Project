@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hidden Campers</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/stylesheets/main.css">
+	<link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Dancing+Script:400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Love+Ya+Like+A+Sister" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Nanum+Pen+Script" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Trocchi" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Luckiest+Guy" rel="stylesheet">
+</head>
+<body>
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand"
+				href="/campsites">
+				<i class="glyphicon glyphicon-home" aria-hidden="true"></i>
+				HiddenCampers
+			</a>
+		</div>
+
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<% if(!currentUser){ %>
+
+				<li>
+					<a href="/campsites/add"><i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+						Add a Campsite
+					</a>
+				</li>
+
+				<li>
+					<a href="/login"><i class="glyphicon glyphicon-log-in" aria-hidden="true"></i> 
+						Login
+					</a>
+				</li>
+
+				<li>
+					<a href="/register"><i class="glyphicon glyphicon-user" aria-hidden="true"></i>
+						Sign Up
+					</a>
+				</li>
+
+				<% } else { %>
+				<li>
+					<a href="/user/<%= currentUser._id%>">
+						<i class="glyphicon glyphicon-leaf" aria-hidden="true"></i>
+						Signed-in as <%= currentUser.username %>
+					</a>
+				</li>
+
+				<li>
+					<a href="/campsites/add">
+						<i class="glyphicon glyphicon-plus" aria-hidden="true"></i> 
+						Add a Campsite
+					</a>
+				</li>
+
+				<li>
+					<a href="/logout">
+						<i class="glyphicon glyphicon-log-out" aria-hidden="true"></i>
+						Logout
+					</a>
+				</li>
+
+				<%}%>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-4">
+			<p class="lead">Map :</p>
+			<iframe 
+			class="mapCSS"
+			src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA7JL82LCdjSY8v2ljX3WkMFjQyEzqwN1Y&q=<%= campsite.location %>"allowfullscreen>
+		</iframe>
+	</div>
+
+	<div class="col-md-8">
+		<div class="thumbnail">
+			<img class="img-responsive" src="<%= campsite.image %>">
+			
+			<div class="caption-full">
+				<h4>
+					<%= campsite.name %>
+				</h4>
+			</div>
+
+			<div class="caption-full">
+				<h5>
+					<%= campsite.location %>
+					<span class="pull-right"><em>Submitted by : <%= campsite.author.username%></em></span>
+				</h5>	
+			</div>
+
+			<div class="caption-full">
+				<p>
+					<%= campsite.description %>
+				</p>
+			</div>
+
+			<div class="caption-full">
+				<p>Features</p>
+				<ul>
+					<% campsite.features.forEach(function(feature){ %>
+					<li>
+						<%= feature %>
+					</li>
+					<% }); %>
+				</ul>
+			</div>
+
+			<div class="caption-full">
+				<p>Activities</p>
+				<ul>
+					<% campsite.activities.forEach(function(activity){ %>
+					<li><%= activity %></li>
+					<% }); %>
+				</ul>
+			</div>
+		</div>
+
+		<div class="well">
+			<div class="text-right">
+				<a class="btn btn-primary"
+				href="/campsites/<%= campsite._id%>/comments/new">
+				Add new Comment
+			</a>
+		</div>
+		<hr>
+		<% campsite.comments.forEach(function(comment){ %>
+		<div class="row">
+			<div class="col-md-12">
+				<strong><%= comment.author.username %></strong>
+				<span class="pull-right"><%= moment(comment.createdAt).fromNow() %></span>
+				<p>
+					<%= comment.text %>
+				</p>
+				<% if(currentUser && comment.author.id.equals (currentUser._id)) { %>
+				<a class="btn btn-xs btn-warning"
+				href="/campsites/<%= campsite._id %>/comments/<%= comment._id%>/edit">
+				Edit
+			</a>
+
+			<form class="delete-form"
+			action="/campsites/<%= campsite._id %>/comments/<%= comment._id%>?_method=DELETE" method="POST">
+			<input type="submit"
+			class="btn btn-xs btn-danger"
+			value="Delete">
+		</form>
+		<% } %>
+	</div>
+</div>
+<% }) %>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
